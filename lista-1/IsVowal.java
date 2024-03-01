@@ -10,12 +10,13 @@ public class IsVowal {
 
         System.out.println("Digite a letra: ");
         char letter = scanner.next().charAt(0);
+        char ltLower = Character.toLowerCase(letter);
 
         char arr[] = {'a', 'e', 'i', 'o', 'u'};
         boolean IsVowel = false;
 
       for(int i = 0; i < arr.length; i++){
-            if(letter == arr[i]){
+            if(ltLower == arr[i]){
                IsVowel = true;
             } 
       }
@@ -31,4 +32,6 @@ public class IsVowal {
     
 }
 
-//falta obrigar letter to be lowercase
+
+//https://www.w3schools.com/java/ref_string_tolowercase.asp
+// https://www.tutorialspoint.com/java/lang/character_tolowercase.htm

@@ -28,3 +28,5 @@ public class countVowel {
 }
 
 //existem jeitos muito mais efetivos de fazer essa verificação, ao meu ver o time complexity desse é de O(n2)
+//https://www.w3schools.com/java/ref_string_tolowercase.asp
+// https://www.tutorialspoint.com/java/lang/character_tolowercase.htm
