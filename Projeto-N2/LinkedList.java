@@ -30,7 +30,6 @@ public class LinkedList {
         count++;
     }
 
-    // append(value) Insere value no final da lista.
     public void append(float value){
         Node node = new Node(value);
         if (isEmpty()) {
@@ -42,6 +41,8 @@ public class LinkedList {
                 current = current.getNext();
             }
             current.setNext(node);
+            node.setNext(head);
+            node.setPrev(current);
             tail = node;
         }
         count++;
@@ -52,6 +53,7 @@ public class LinkedList {
         Node node = new Node(value);
         if (isEmpty() || value <= head.getData()) { //insere no inicio
             node.setNext(head);
+            node.setPrev(tail);
             head = node;
             if(isEmpty()){
                 tail = node;
@@ -68,7 +70,9 @@ public class LinkedList {
                 current = current.getNext();
             }
             node.setNext(current);
+            node.setPrev(previous);
             previous.setNext(node);
+
     
             if (current == null) {
                 tail = node;
@@ -107,6 +111,7 @@ public class LinkedList {
                 current = current.getNext();
             }
             node.setNext(current);
+            node.setPrev(previous);
             previous.setNext(node);
     
             if (current == null) {
@@ -129,6 +134,7 @@ public class LinkedList {
             return;
         }
         Node next = head.getNext();
+        next.setPrev(tail);
         head = next;
     }
 
@@ -143,15 +149,20 @@ public class LinkedList {
             return;
         }
 
+        Node removed = head;
+		
+		if (head == tail) {
+			head = tail = null;
+		} else { 
+			head = head.getNext();
+			head.setPrev(tail);
+			tail.setNext(head);
+		}
 
-        Node current = head;
-        while (current.getNext().getNext() != null) {
-            current = current.getNext();
-        }
+		--count;
 
-        current.setNext(null);
-        tail = current; 
-        count--;
+		removed.setPrev(null);
+		removed.setNext(null);  
 
     }
 
