@@ -1,0 +1,30 @@
+   public void insert(float value, float positionToBeInserted){
+
+        Node node = new Node(value);
+
+        if (positionToBeInserted < 0 || positionToBeInserted > size) {
+            System.out.println("Posição inválida");
+            return;
+
+        }
+        if (isEmpty() || positionToBeInserted == 0) {
+            node.setNext(head);
+            head = node;
+            if(isEmpty()){
+                tail = node;
+            }
+        } else if (positionToBeInserted == size + 1)  { //inserindo no final
+            tail.setNext(node);
+            tail = node;
+        } else {
+            Node current = head;
+            for(int i = 0; i < positionToBeInserted - 1; i++){
+                current = current.getNext();
+            } 
+            node.setNext(current.getNext()); //aqui é importante respeitar a ordem, pq antes de 'conectar' o node ao item anterior da lista, eu faço a conexão com o proximo. ja que se eu fizesse o segundo passo -> current.setNext(node); primeiro,  eu teria perdido o acesso ao next do item que esta atualmente na posição em que o node quer ser inserido
+            current.setNext(node);
+        }
+        size++;
+    }
+
+    //nao implementavel

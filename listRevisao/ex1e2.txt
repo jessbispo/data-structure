@@ -1,0 +1,9 @@
+1. Descreva as operações fundamentais da estrutura de dados que tem o comportamento do tipo LIFO.
+
+    - Last in, First out, o ultimo item que entra no vetor é o primeiro sair quando um metodo do tipo remove é chamado. É utilizado na estrutura de dados Stack, e quando chamado o metodo pop() é retirado o ultimo item a ser adicionado no vetor
+
+2. Descreva as operações fundamentais da estrutura de dados que tem o comportamento do tipo FIFO
+
+    - First in, First out, o primeiro item que entra no vetor é o primeiro sair quando um metodo do tipo remove é chamado. É utilizado na estrutura de dados Queue e quando chamado o metodo remove() é retirado o primeiro item (head) de um vetor.
+
+    

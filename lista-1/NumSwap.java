@@ -11,13 +11,13 @@ public class NumSwap {
         System.out.println("Digite o segundo numero: ");
         byte secondNum = scanner.nextByte();
 
-        System.out.println("Primeiro num: " + firstNum + " Segundo num: " + secondNum);
+        System.out.println("Antes da alteração: Primeiro num: " + firstNum + " Segundo num: " + secondNum);
 
         byte temp = firstNum;
         firstNum = secondNum;
         secondNum = temp;
 
-        System.out.println("Primeiro num: " + firstNum + " Segundo num: " + secondNum );
+        System.out.println("Depois da alteração: Primeiro num: " + firstNum + " Segundo num: " + secondNum );
 
         scanner.close();
     }

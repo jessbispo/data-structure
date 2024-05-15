@@ -1,0 +1,5 @@
+-> Inicia o processo dividindo o numero decimal por 2
+-> Anota o resto dentro de uma estrutura de dados pilhas, que auxiliará na hora de imprimirmos o valor em binario.
+-> Continua dividindo o quociente por 2 até que chegue no valor 0, em cada uma das divisões adiciona o resto na Stack 
+-> Quando o quociente chegar ao valor 0, finalizamos a nossa divisão e ja temos o nosso numero binario dentro da Stack
+-> Para imprimirmos o numero binario, podemos fazer um loop enquanto retiramos o valor da stack, por ser uma estrutura de dados de metodo LIFO, quando utilizarmos pop ou remove na Stack, os valores serão impressos na ordem correta.

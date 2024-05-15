@@ -1,0 +1,54 @@
+
+      
+        // // st.push('a');
+        // // st.push(35);
+        // // st.push(36);
+        // // st.push(37);
+        // // st.push(38);
+        // // st.push(55);
+
+        // // System.out.println(st.isEmpty());
+        // // System.out.println(st.isFull());
+        // // System.out.println(StackN.capacity);
+        // // System.out.println(st.top());
+        // // System.out.println(st.pop());
+        // // System.out.println(st.jess()); //testando o conceito de methodos de uma classe, mt legal
+        // st.clear();
+        // System.out.println(st.size());
+        // System.out.println(st.count());
+
+        // String str = "(Hello([{W}o]r))ld!";
+        // char[] charArray = str.toCharArray();
+        
+        // System.out.println("Array de caracteres:");
+        // for (char c : charArray) {
+        //     System.out.println(c);
+        // }
+
+        //recebe a str com os caracteres especiais 
+        String str = "(Hello([{W}o]r))ld!";
+        char[] charArray = str.toCharArray();
+        
+        //itera pelo arr e verifica se cada letra é um caractere especial, se for adiciona na minha Stack
+        for (char c : charArray) {
+            if (c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}' || c == '<' || c == '>') {
+                st.push(c);
+            }
+        }
+
+        //somente printa e retirada cada item da Stack
+        // System.out.println("Special characters in the stack:");
+        // while (!st.isEmpty()) {
+        //     System.out.println(st.pop());
+        // }
+        
+        //primeira verificação que eu faço é se a quantidade de items no arr é impar, pq se for nao tem como estar correto
+        if (st.count()%2 != 0){
+            System.out.println("Unordered special characters");
+        } else {
+            for (char i: charArray){
+
+            }
+            System.out.println("Ordered chars");
+
+        }
