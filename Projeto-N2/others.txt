@@ -1,0 +1,3 @@
+https://stackoverflow.com/questions/648309/what-does-it-mean-by-buffer
+https://docs.oracle.com/javase/8/docs/api/java/io/BufferedReader.html
+https://www.geeksforgeeks.org/difference-between-buffer-and-cache/
