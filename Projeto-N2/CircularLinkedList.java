@@ -1,21 +1,32 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
 
 public class CircularLinkedList {
     private Node head;
     private Node tail;
     private int count;
+    private Node markStart;
+    private Node markEnd;
+    private CircularLinkedList clipboard;
 
     public CircularLinkedList() {
         head = null;
         tail = null;
         count = 0;
+        markStart = null;
+        markEnd = null;
+        clipboard = null;
     }
 
     public boolean isEmpty() {
         return count == 0;
     }
 
-    public int size() {
+    public int count() {
         return count;
     }
 
@@ -101,22 +112,54 @@ public class CircularLinkedList {
         count--;
     }
 
-    public void display(int start, int end) {
-        if (isEmpty()) {
-            System.out.println("Lista vazia.");
-            return;
-        }
-        Node current = head;
-        int lineNumber = 1;
-        do {
-            if (lineNumber >= start && lineNumber <= end) {
-                System.out.println(lineNumber + ". " + current.getLine());
-            }
-            current = current.getNext();
-            lineNumber++;
-        } while (current != head && lineNumber <= end);
+    public void displayAll() {
+        display();
     }
 
+    public void display() {
+        Node current = head;
+        int count = 0;
+        if (current != null) {
+            do {
+                System.out.println(current.getLine());
+                count++;
+                if (count % 20 == 0) {
+                    System.out.print("Press Enter to continue...");
+                    try {
+                        System.in.read();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                current = current.getNext();
+            } while (current != head);
+        }
+    }
+
+    public void display(int start, int end) {
+        Node current = head;
+        int index = 1;
+        int count = 0;
+        if (current != null) {
+            do {
+                if (index >= start && index <= end) {
+                    System.out.println(current.getLine());
+                    count++;
+                    if (count % 20 == 0) {
+                        System.out.print("Press Enter to continue...");
+                        try {
+                            System.in.read();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                current = current.getNext();
+                index++;
+            } while (current != head);
+        }
+    }
+    
     public boolean loadFile(String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -144,7 +187,6 @@ public class CircularLinkedList {
         }
     }
 
-    // Método para buscar e substituir um elemento por outro em todas as linhas
     public void replaceAll(String oldElement, String newElement) {
         if (isEmpty()) {
             System.out.println("Lista vazia.");
@@ -159,8 +201,7 @@ public class CircularLinkedList {
         } while (current != head);
     }
 
-    // Método para buscar e substituir um elemento por outro em uma linha específica
-    public void replaceInLine(int lineIndex, String oldElement, String newElement) {
+    public void replaceInLine(String oldElement, String newElement, int lineIndex) {
         if (isEmpty() || lineIndex < 1 || lineIndex > count) {
             System.out.println("Indice invalido.");
             return;
@@ -174,7 +215,6 @@ public class CircularLinkedList {
         }
     }
 
-    // Método para buscar um elemento e exibir as linhas que o contêm
     public void searchAndDisplay(String element) {
         if (isEmpty()) {
             System.out.println("Lista vazia.");
@@ -191,6 +231,96 @@ public class CircularLinkedList {
         } while (current != head);
     }
 
+    public void markText(int start, int end) {
+        if (start < 1 || end < start || end > count) {
+            System.out.println("Intervalo de linhas invalido.");
+            return;
+        }
+        Node current = head;
+        for (int i = 1; i < start; i++) {
+            current = current.getNext();
+        }
+        markStart = current;
+        for (int i = start; i <= end; i++) {
+            current = current.getNext();
+        }
+        markEnd = current.getPrev();
+    }
+
+    public void copyMarkedText() {
+        if (markStart == null || markEnd == null) {
+            System.out.println("Nenhum texto marcado.");
+            return;
+        }
+        clipboard = new CircularLinkedList();
+        Node current = markStart;
+        do {
+            clipboard.appendLine(current.getLine());
+            current = current.getNext();
+        } while (current != markEnd.getNext());
+    }
+
+    public void cutMarkedText() {
+        if (markStart == null || markEnd == null) {
+            System.out.println("Nenhum texto marcado.");
+            return;
+        }
+        copyMarkedText();
+        Node current = markStart;
+        while (current != markEnd.getNext()) {
+            Node next = current.getNext();
+            removeLineAt(findLineIndex(current));
+            current = next;
+        }
+        markStart = null;
+        markEnd = null;
+    }
+
+    public void pasteText(int index) {
+        if (clipboard == null || clipboard.isEmpty()) {
+            System.out.println("Area de transferencia vazia.");
+            return;
+        }
+        Node current = clipboard.head;
+        do {
+            insertLineAt(index++, current.getLine());
+            current = current.getNext();
+        } while (current != clipboard.head);
+    }
+
+    public void removeLinesFrom(int start) {
+        if (start < 1 || start > count) {
+            System.out.println("Indice invalido.");
+            return;
+        }
+        for (int i = start; i <= count; i++) {
+            removeLineAt(start);
+        }
+    }
+
+    public void removeLinesTo(int end) {
+        if (end < 1 || end > count) {
+            System.out.println("Indice invalido.");
+            return;
+        }
+        for (int i = 1; i <= end; i++) {
+            removeLineAt(1);
+        }
+    }
+
+    private int findLineIndex(Node node) {
+        Node current = head;
+        int index = 1;
+        do {
+            if (current == node) {
+                return index;
+            }
+            current = current.getNext();
+            index++;
+        } while (current != head);
+        return -1;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -202,26 +332,4 @@ public class CircularLinkedList {
         } while (current != head);
         return sb.toString();
     }
-
-    // public static void main(String[] args) {
-    //     CircularLinkedList list = new CircularLinkedList();
-    //     list.appendLine("First line");
-    //     list.appendLine("Second line");
-    //     list.appendLine("Third line");
-
-    //     System.out.println("Initial list:");
-    //     System.out.println(list);
-
-    //     list.insertLineAt(2, "Inserted line");
-    //     System.out.println("After inserting a line at position 2:");
-    //     System.out.println(list);
-
-    //     list.removeLineAt(3);
-    //     System.out.println("After removing the line at position 3:");
-    //     System.out.println(list);
-
-    //     list.replaceAll("line", "LINE");
-    //     System.out.println("After replacing 'line' with 'LINE':");
-    //     System.out.println(list);
-    // }
 }
