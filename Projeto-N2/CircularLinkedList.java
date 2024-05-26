@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,7 +12,7 @@ public class CircularLinkedList {
     private int count;
     private Node markStart;
     private Node markEnd;
-    private CircularLinkedList clipboard;
+    public CircularLinkedList clipboard;
 
     public CircularLinkedList() {
         head = null;
@@ -27,7 +28,21 @@ public class CircularLinkedList {
     }
 
     public int count() {
+        if (head == null) return 0;
+        int count = 1;
+        Node current = head;
+        while (current.getNext() != head) {
+            count++;
+            current = current.getNext();
+        }
         return count;
+    }
+
+    public void clear() {
+        head = null;
+        tail = null;
+        markStart = null;
+        markEnd = null;
     }
 
     public void appendLine(String line) {
@@ -203,7 +218,7 @@ public class CircularLinkedList {
 
     public void replaceInLine(String oldElement, String newElement, int lineIndex) {
         if (isEmpty() || lineIndex < 1 || lineIndex > count) {
-            System.out.println("Indice invalido.");
+            System.out.println("indice invalido.");
             return;
         }
         Node current = head;
@@ -288,19 +303,44 @@ public class CircularLinkedList {
         } while (current != clipboard.head);
     }
 
+    
     public void removeLinesFrom(int start) {
-        if (start < 1 || start > count) {
-            System.out.println("Indice invalido.");
+        if (start < 1 || start > count()) {
+            System.out.println("indice invalido.");
             return;
         }
-        for (int i = start; i <= count; i++) {
-            removeLineAt(start);
+
+        Node current = head;
+        for (int i = 1; i < start; i++) {
+            current = current.getNext();
+        }
+
+        while (current != null && current != head) {
+            Node next = current.getNext();
+            removeNode(current);
+            current = next;
+        }
+    }
+
+    private void removeNode(Node node) {
+        if (node == head && node == tail) {
+            head = null;
+            tail = null;
+        } else {
+            if (node == head) {
+                head = node.getNext();
+            }
+            if (node == tail) {
+                tail = node.getPrev();
+            }
+            node.getPrev().setNext(node.getNext());
+            node.getNext().setPrev(node.getPrev());
         }
     }
 
     public void removeLinesTo(int end) {
         if (end < 1 || end > count) {
-            System.out.println("Indice invalido.");
+            System.out.println("indice invalido.");
             return;
         }
         for (int i = 1; i <= end; i++) {

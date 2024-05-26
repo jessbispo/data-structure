@@ -12,47 +12,47 @@ public class Main {
         while (true) {
             System.out.print(":");
             command = scanner.nextLine();
-            String[] parts = command.split(" ");
+             String[] parts = command.split(" ");
 
-            switch (parts[0]) {
-                case ":e":
+             switch (parts[0]) {
+                case "e":
                     if (parts.length > 1) {
                         loadFile(parts[1]);
                     } else {
                         System.out.println("Uso correto: :e NomeArq.ext");
                     }
                     break;
-                case ":w":
+                case "w":
                     if (parts.length > 1) {
                         saveFile(parts[1]);
                     } else {
                         saveFile();
                     }
                     break;
-                case ":q!":
+                case "q!":
                     quitEditor();
                     break;
-                case ":v":
+                case "v":
                     if (parts.length == 3) {
                         markText(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
                     } else {
                         System.out.println("Uso correto: :v LinIni LinFim");
                     }
                     break;
-                case ":y":
+                case "y":
                     copyMarkedText();
                     break;
-                case ":c":
+                case "c":
                     cutMarkedText();
                     break;
-                case ":p":
+                case "p":
                     if (parts.length == 2) {
                         pasteText(Integer.parseInt(parts[1]));
                     } else {
                         System.out.println("Uso correto: :p LinIniColar");
                     }
                     break;
-                case ":s":
+                case "s":
                     if (parts.length == 1) {
                         display();
                     } else if (parts.length == 3) {
@@ -61,28 +61,28 @@ public class Main {
                         System.out.println("Uso correto: :s [LinIni LinFim]");
                     }
                     break;
-                case ":x":
+                case "x":
                     if (parts.length == 2) {
                         removeLine(Integer.parseInt(parts[1]));
                     } else {
                         System.out.println("Uso correto: :x Lin");
                     }
                     break;
-                case ":xG":
+                case "xG":
                     if (parts.length == 2) {
                         removeLinesFrom(Integer.parseInt(parts[1]));
                     } else {
                         System.out.println("Uso correto: :xG Lin");
                     }
                     break;
-                case ":XG":
+                case "XG":
                     if (parts.length == 2) {
                         removeLinesTo(Integer.parseInt(parts[1]));
                     } else {
                         System.out.println("Uso correto: :XG Lin");
                     }
                     break;
-                case ":/":
+                case "/":
                     if (parts.length == 2) {
                         searchAndDisplay(parts[1]);
                     } else if (parts.length == 3) {
@@ -93,21 +93,21 @@ public class Main {
                         System.out.println("Uso correto: :/ Elemento [Elem [ElemTroca [Linha]]]");
                     }
                     break;
-                case ":a":
+                case "a":
                     if (parts.length == 2) {
                         insertAfter(Integer.parseInt(parts[1]));
                     } else {
                         System.out.println("Uso correto: :a PosLin");
                     }
                     break;
-                case ":i":
+                case "i":
                     if (parts.length == 2) {
                         insertBefore(Integer.parseInt(parts[1]));
                     } else {
                         System.out.println("Uso correto: :i PosLin");
                     }
                     break;
-                case ":help":
+                case "help":
                     showHelp();
                     break;
                 default:
@@ -152,6 +152,7 @@ public class Main {
                 saveFile();
             }
         }
+        list.clear();
         System.out.println("Encerrando o editor...");
         scanner.close();
         System.exit(0);
@@ -165,12 +166,12 @@ public class Main {
         list.copyMarkedText();
     }
 
-    private static void cutMarkedText() {
+    private static void  cutMarkedText() {
         list.cutMarkedText();
     }
 
     private static void pasteText(int position) {
-        list.pasteText(position);
+        list.pasteText(position + 1);
     }
 
     private static void display() {
